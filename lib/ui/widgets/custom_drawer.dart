@@ -1,15 +1,15 @@
-import 'package:app4_receitas/utils/theme/custom_theme_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'package:app4_receitas/utils/theme/custom_theme_controller.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
-
     // * Get.find
     // Usado para encontrar uma instância já injetada do GetX
     final theme = Get.find<CustomThemeController>();

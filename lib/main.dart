@@ -18,8 +18,6 @@ Future<void> main() async {
 
   // Inicializando as dependências
   await setupDependencies();
-
-  runApp(const MainApp());
 }
 
 class MainApp extends StatelessWidget {
@@ -27,7 +25,6 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     // * Get.put
     // Usado para injetar dependências no GetX
     final theme = Get.put(CustomThemeController());

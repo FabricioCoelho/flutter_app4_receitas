@@ -1,6 +1,7 @@
-import 'package:app4_receitas/data/models/recipe.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'package:app4_receitas/data/models/recipe.dart';
 
 class RecipeCard extends StatelessWidget {
   const RecipeCard({super.key, required this.recipe});
