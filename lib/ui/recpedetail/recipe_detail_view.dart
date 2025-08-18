@@ -4,6 +4,7 @@ import 'package:app4_receitas/ui/widgets/recipe_row_details.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class RecipeDetailView extends StatefulWidget {
   const RecipeDetailView({super.key, required this.id});
@@ -61,12 +62,12 @@ class _RecipeDetailViewState extends State<RecipeDetailView> {
         );
       }
 
-      final recipe = viewModel.recipe!;
+      final recipe = viewModel.recipe;
       return SingleChildScrollView(
         child: Column(
           children: [
             Image.network(
-              recipe.image!,
+              recipe!.image!,
               height: 400,
               width: double.infinity,
               fit: BoxFit.cover,
@@ -90,6 +91,15 @@ class _RecipeDetailViewState extends State<RecipeDetailView> {
               child: Column(
                 children: [
                   Text(recipe.name),
+                  Text(
+                    recipe.name,
+                    style: GoogleFonts.dancingScript(
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
                   const SizedBox(height: 16),
                   RecipeRowDetails(recipe: recipe),
                   const SizedBox(height: 16),
@@ -97,7 +107,13 @@ class _RecipeDetailViewState extends State<RecipeDetailView> {
                       ? Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            Text('Ingredientes:'),
+                            Text(
+                              'Ingredientes:',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                             const SizedBox(height: 8),
                             Text(recipe.ingredients.join('\n')),
                           ],
@@ -108,7 +124,13 @@ class _RecipeDetailViewState extends State<RecipeDetailView> {
                       ? Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            Text('Instruções:'),
+                            Text(
+                              'Instruções:',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                             const SizedBox(height: 8),
                             Text(recipe.instructions.join('\n')),
                           ],
@@ -130,6 +152,7 @@ class _RecipeDetailViewState extends State<RecipeDetailView> {
                       ),
                     ],
                   ),
+                  SizedBox(height: 32),
                 ],
               ),
             ),
