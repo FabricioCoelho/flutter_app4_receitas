@@ -27,6 +27,8 @@ class AuthViewModel extends GetxController {
   bool get isSubmitting => _isSubmitting.value;
   bool get isLoginMode => _isLoginMode.value;
 
+  String? get errorMessage => null;
+
   String? validateEmail(String? value) {
     if (value == null || value.isEmpty) return 'Informe o e-mail';
     if (!RegExp(
@@ -84,6 +86,7 @@ class AuthViewModel extends GetxController {
     } else {
       await register();
     }
+    _isSubmitting.value = false;
   }
 
   Future<void> login() async {

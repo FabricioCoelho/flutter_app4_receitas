@@ -1,10 +1,15 @@
 import 'package:app4_receitas/data/models/recipe.dart';
+import 'package:app4_receitas/data/models/user_profile.dart';
+import 'package:app4_receitas/data/repositories/auth_repository.dart';
 import 'package:app4_receitas/data/repositories/recipe_repository.dart';
 import 'package:app4_receitas/di/service_locator.dart';
+import 'package:app4_receitas/utils/app_error.dart';
+import 'package:either_dart/src/either.dart';
 import 'package:get/get.dart';
 
 class RecipeDetailViewModel extends GetxController {
   final _repository = getIt<RecipeRepository>();
+  final _authRepository = getIt<AuthRepository>();
 
   // Estados
   final Rxn<Recipe> _recipe = Rxn<Recipe>();
@@ -24,7 +29,11 @@ class RecipeDetailViewModel extends GetxController {
       _errorMessage.value = '';
       _recipe.value = await _repository.getRecipeById(id);
 
-      final userId = recipe!.userId;
+      var userId = '';
+      await _authRepository.currentUser.fold(
+        (left) => _errorMessage.value = left.message,
+        (right) => userId = right.id,
+      );
       _isFavorite.value = await isRecipeFavorite(id, userId);
     } catch (e) {
       _errorMessage.value = 'Falha ao buscar receita: ${e.toString()}';
@@ -48,13 +57,17 @@ class RecipeDetailViewModel extends GetxController {
   }
 
   Future<void> toggleFavorite() async {
-    final currentUserId = recipe!.userId;
+    var userId = '';
+    await _authRepository.currentUser.fold(
+      (left) => _errorMessage.value = left.message,
+      (right) => userId = right.id,
+    );
     final recipeId = recipe!.id;
 
     if (_isFavorite.value) {
-      await removeFromFavorites(recipeId, currentUserId);
+      await removeFromFavorites(recipeId, userId);
     } else {
-      await addToFavorites(recipeId, currentUserId);
+      await addToFavorites(recipeId, userId);
     }
   }
 
@@ -85,4 +98,11 @@ class RecipeDetailViewModel extends GetxController {
       _isLoading.value = false;
     }
   }
+}
+
+extension on Future<Either<AppError, UserProfile>> {
+  Future<void> fold(
+    Function(dynamic left) param0,
+    Function(dynamic right) param1,
+  ) async {}
 }
