@@ -32,7 +32,9 @@ class RecipeDetailViewModel extends GetxController {
       var userId = '';
       await _authRepository.currentUser.fold(
         (left) => _errorMessage.value = left.message,
-        (right) => userId = right.id,
+        (right) {
+          userId = right.id;
+        },
       );
       _isFavorite.value = await isRecipeFavorite(id, userId);
     } catch (e) {
@@ -60,7 +62,9 @@ class RecipeDetailViewModel extends GetxController {
     var userId = '';
     await _authRepository.currentUser.fold(
       (left) => _errorMessage.value = left.message,
-      (right) => userId = right.id,
+      (right) {
+        userId = right.id;
+      },
     );
     final recipeId = recipe!.id;
 
